@@ -8,6 +8,9 @@ class Artikal {
     }
 }
 
+
+
+
 let artikli = []
 
 function kreirajRedoveArtikala() {
@@ -51,11 +54,16 @@ function prikaziDetaljeArtikla(artikal) {
 }
 
 function inicijalizujArtikle() {
-    artikli = [
-        new Artikal("Monitor", 165, "Zakrivljeni gejming monitor, dizajniran da zadovolji potrebe profesionalnih gejmera i ljubitelja multimedijalnog sadržaja."),
-        new Artikal("TV", 650, "Televizor 27 inča"),
-        new Artikal("Miš", 20, "Bežični miš")
-    ]
+    if (localStorage.getItem('artikli') === undefined || localStorage.getItem('artikli') === null) {
+        artikli = [
+            new Artikal("Monitor", 165, "Zakrivljeni gejming monitor, dizajniran da zadovolji potrebe profesionalnih gejmera i ljubitelja multimedijalnog sadržaja."),
+            new Artikal("TV", 650, "Televizor 27 inča"),
+            new Artikal("Miš", 20, "Bežični miš")
+        ]
+    } else {
+        artikli = JSON.parse(localStorage.getItem('artikli'));
+    }
+
     kreirajRedoveArtikala()
     submisijaForme()
 }
@@ -74,6 +82,8 @@ function submisijaForme() {
 
         const noviArtikal = new Artikal(naziv, cena, opis)
         artikli.push(noviArtikal)
+        localStorage.setItem('artikli', JSON.stringify(artikli));
+
 
         kreirajRedoveArtikala()
     })
